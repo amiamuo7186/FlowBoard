@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>FlowBoard</title>
+</head>
+
+<body>
+    <div class="bg-gray-100 min-h-screen p-8">
+        <div>
+            <span class="flex flex-row justify-between">
+                <h1 class="text-3xl font-bold  mb-8">Kanban Board</h1>
+                <button type="button">🔍chercher</button>
+                <button type="button" id="new"> +ajouter </button>
+                </span>
+                <dialog id="search" class="bg-gray-400 bg-opacity-90 p-6 rounded shadow-lg">
+                    <form class="space-y-4" >
+                        <h2>tache</h2>
+                        <label class="block text-sm font-medium text-gray-700" for="titre"> title</label>
+                        <input id ="titre" class="mt-1 block w-full border border-gray-300 rounded-md p-2"  type="text">
+                        <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+                        <select name="Status" >
+                            <option value="">choisir un choix </option>
+                            <option value="TODO">toDo</option>
+                            <option value="INPROGRESS">in Progress</option>
+                            <option value="DONE">done</option>
+                        </select>
+                        <label for="desc" class="block text-sm font-medium text-gray-700">Description</label>
+                        <textarea id="desc" placeholder="votre descrption"></textarea>
+                         <label for="priority" class="block text-sm font-medium text-gray-700">Priority</label>
+                        <select name="Priority" >
+                            <option value="">choisir un choix </option>
+                            <option value="HIGH">high</option>
+                            <option value="MEDIUM">medium</option>
+                            <option value="LOW">low</option>
+                        </select>
+                        <label for="assign" class="block text-sm font-medium text-gray-700">assignee</label>
+                        <input type="text" id="assign"class="mt-1 block w-full border border-gray-300 rounded-md p-2"  >
+                        <label type="Dudate" class="block text-sm font-medium text-gray-700">dueDate</label>
+                        <input type="date" id="Dudate">
+                        <label for="tags" class="block text-sm font-medium text-gray-700">tags</label>
+                        <input type="text" id="tags">
+
+
+                    </form>
+                </dialog>
+
+
+            
+
+
+
+            <div class="flex flex-col md:flex-row gap-6">
+
+                <div class="flex-1 bg-gray-200 p-4 ">
+                    <h2 class="text-xl font-semibold mb-4">To Do</h2>
+                    <ul id="todo-list" class="min-h-[200px] space-y-2">
+                    </ul>
+                </div>
+
+                <div class="flex-1 bg-gray-200 p-4 ">
+                    <h2 class="text-xl font-semibold mb-4">In Progress</h2>
+                    <ul id="progress-list" class="min-h-[200px] space-y-2">
+                    </ul>
+                </div>
+
+                <div class="flex-1 bg-gray-200 p-4 ">
+                    <h2 class="text-xl font-semibold mb-4">Done</h2>
+                    <ul id="done-list" class="min-h-[200px] space-y-2">
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div id="task-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
+            <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+                <h3 class="text-lg font-semibold mb-4">Add New Task</h3>
+                <input id="task-title" type="text" placeholder="Task Title" class="w-full p-2 mb-4 border rounded">
+                <textarea id="task-description" placeholder="Task Description"
+                    class="w-full p-2 mb-4 border rounded h-24"></textarea>
+                <div class="flex justify-end">
+                    <button onclick="closeTaskModal()"
+                        class="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded mr-2">
+                        Cancel
+                    </button>
+                    <button onclick="addTask()"
+                        class="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded">
+                        Add Task
+                    </button>
+                </div>
+            </div>
+        </div> -->
+<script src="script.js"></script>
+</body>
+
+</html>
