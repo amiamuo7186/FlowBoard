@@ -1,0 +1,10 @@
+.cards {
+    display: inline;
+
+}
+.extremite{
+    display: flex;
+    justify-content: flex-end;
+    color: brown;
+    font-weight: bold;
+}
