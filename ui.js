@@ -109,17 +109,41 @@ form.addEventListener("submit", function (event) {
   const valeurAssignee = assignee.value
   const valeurtags = Tags.value
   const valeurDueDate = DueDate.value
-  if (!ValiderText(valeurTitre, valeurAssignee, valeurtags)) {
-
+  if (!ValiderText(titre, assignee, Tags)) {
+    console.log(invalides)
+     invalides.forEach(input => {
+      console.log(input.parentElement)
+        const msg = document.createElement("small");
+        msg.style.color = "red";
+        input.style.borderColor = "red"
+        msg.textContent = "Veuillez remplir le champ avec un format valide.";
+        const parent=input.parentElement
+         parent.insertBefore(msg, input.nextSibling)
+    });
+ console.log("faux")
   }
   else {
     console.log("vrai")
   }
 
 })
+let invalides = [];
 function ValiderText(...values) {
-  return values.every(value => RejexText.test(value));
+    invalides=[]
+    let ok=true
+    for (let i = 0; i < values.length; i++) {
+        if (!RejexText.test(values[i].value)) {
+          ok=false
+            invalides.push(values[i]);
+        }
+    }
+
+
+console.log(ok)
+    return ok
 }
+
+
 
 //************ live search 
 btnChercher.addEventListener("click", function () {
@@ -145,9 +169,8 @@ cardsDemande.forEach(c => {
   resultat.innerHTML+=`<h2 class="cards"> <strong >Titre:</strong>${c.title}</h2> ===> <h2 class="cards"><strong >Assigne:</strong >${c.assignee}
       <p><strong>Description:</strong> ${c.description}</p>
       <p><strong>Priority:</strong>${c.priority}</p>
-      <p><strong>DueDate:</strong> ${c.dueDate}</p>`
-  
-  
+      <p><strong>DueDate:</strong> ${c.dueDate}</p>
+      <p>****************************************************************</p>`
 });
 
 })
