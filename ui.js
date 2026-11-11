@@ -11,17 +11,15 @@ const toDo = document.getElementById("todo-list")
 const prog = document.getElementById("progress-list")
 const don = document.getElementById("done-list")
 const form = document.querySelector("form")
+const resultat=document.getElementById("resultat")
 let cards = null
 
-const RejexText = /^[a-zA-ZÀ-ÿ\s'-]{2,50}$/;
 
-// *********affichage et gestion d'erreur 
-document.addEventListener("DOMContentLoaded", () => {
-  loadCard((data) => {
+const RejexText = /^[a-zA-ZÀ-ÿ\s'-]{2,50}$/;
+loadCard((data) => {
         cards = data;
         console.log(cards)
         afficher(cards)},masquer)
-})
 console.log(cards)// il reste vide 
 function afficher(tab) {
 
@@ -135,8 +133,22 @@ dialog2.addEventListener("click", (e) => {
 })
 inputCHercher.addEventListener("input", function () {
   const valeur = inputCHercher.value.toLowerCase()
-  console.log(valeur)
-
+  
+  let cardsDemande=cards.filter(c=>c. title.toLowerCase().includes(valeur))
+  
+  resultat.innerHTML=""
+  if(valeur==""){
+    cardsDemande=[]
+    resultat.innerHTML="<p>Choisir un choix</p>"
+  }
+cardsDemande.forEach(c => {
+  resultat.innerHTML+=`<h2 class="cards"> <strong >Titre:</strong>${c.title}</h2> ===> <h2 class="cards"><strong >Assigne:</strong >${c.assignee}
+      <p><strong>Description:</strong> ${c.description}</p>
+      <p><strong>Priority:</strong>${c.priority}</p>
+      <p><strong>DueDate:</strong> ${c.dueDate}</p>`
+  
+  
+});
 
 })
 
