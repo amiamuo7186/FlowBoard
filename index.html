@@ -10,6 +10,8 @@
 </head>
 
 <body>
+   
+    <script src="ui.js" type="module"></script>
     <div hidden id="error" >
         <span  class="flex flex-col justify-between ">
             <p class=" text-3xl  bg-red-100  border-red-400 text-red-700 px-4 py-3 rounded relative flex justify-center">ressailler apres, un probleme est reçue</p>
@@ -56,11 +58,10 @@
                         <input type="date" id="Dudate">
                         <label for="tags" class="block text-sm font-medium text-gray-700">tags</label>
                         <input type="text" id="tags">
+                        <button type="submit">add</button>
                     </form>
                 </dialog>
-                <dialog id="search" class="bg-gray-400 bg-opacity-90 p-6 rounded shadow-lg ml-5 ">
-                    <label for=""></label>//
-                </dialog>
+               
 
 
                 <div class="flex flex-col md:flex-row gap-6">
@@ -90,7 +91,7 @@
     </main>
 
 
-    <script src="ui.js" type="module"></script>
+    
 </body>
 
 </html>
