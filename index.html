@@ -10,20 +10,32 @@
 </head>
 
 <body>
-    <div class="bg-gray-100 min-h-screen p-8">
-        <div>
-            <span class="flex flex-row justify-between">
-                <h1 class="text-3xl font-bold  mb-8">Kanban Board</h1>
-                <button type="button">🔍chercher</button>
-                <button type="button" id="new"> +ajouter </button>
+    <div hidden id="error" >
+        <span  class="flex flex-col justify-between ">
+            <p class=" text-3xl  bg-red-100  border-red-400 text-red-700 px-4 py-3 rounded relative flex justify-center">ressailler apres, un probleme est reçue</p>
+            <button type="button" id="ressailler" class="btn-error m-10 border border-red-400">ressailler</button>
+            </span>      
+    </div>
+    <main id="cards">
+        <div class="bg-gray-100 min-h-screen p-8">
+            <div>
+                <span class="flex flex-row justify-between">
+                    <h1 class="text-3xl font-bold  mb-8">Kanban Board</h1>
+                    <button type="button" id="cherche">🔍chercher</button>
+                    <button type="button" id="new"> +ajouter </button>
                 </span>
+                <dialog id="search"class="bg-gray-400 bg-opacity-90 p-6 rounded shadow-lg mr-200 mt-10 " >
+                    <label for="chercher" class="block text-sm font-medium text-gray-700" >CHERCHER</label>
+                    <input type="text" id="chercher" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+
+                </dialog>
                 <dialog id="add" class="bg-gray-400 bg-opacity-90 p-6 rounded shadow-lg ml-5 ">
-                    <form class="space-y-4 p-6" >
+                    <form class="space-y-4 p-6">
                         <h2 class="text-2xl flex">tache</h2>
                         <label class="block text-sm font-medium text-gray-700" for="titre"> title</label>
-                        <input id ="titre" class="mt-1 block w-full border border-gray-300 rounded-md p-2"  type="text">
+                        <input id="titre" class="mt-1 block w-full border border-gray-300 rounded-md p-2" type="text">
                         <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
-                        <select name="Status" >
+                        <select name="Status">
                             <option value="">choisir un choix </option>
                             <option value="TODO">toDo</option>
                             <option value="INPROGRESS">in Progress</option>
@@ -31,49 +43,54 @@
                         </select>
                         <label for="desc" class="block text-sm font-medium text-gray-700">Description</label>
                         <textarea id="desc" placeholder="votre descrption"></textarea>
-                         <label for="priority" class="block text-sm font-medium text-gray-700">Priority</label>
-                        <select name="Priority" >
+                        <label for="priority" class="block text-sm font-medium text-gray-700">Priority</label>
+                        <select name="Priority">
                             <option value="">choisir un choix </option>
                             <option value="HIGH">high</option>
                             <option value="MEDIUM">medium</option>
                             <option value="LOW">low</option>
                         </select>
                         <label for="assign" class="block text-sm font-medium text-gray-700">assignee</label>
-                        <input type="text" id="assign"class="mt-1 block w-full border border-gray-300 rounded-md p-2"  >
+                        <input type="text" id="assign" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
                         <label type="Dudate" class="block text-sm font-medium text-gray-700">dueDate</label>
                         <input type="date" id="Dudate">
                         <label for="tags" class="block text-sm font-medium text-gray-700">tags</label>
                         <input type="text" id="tags">
                     </form>
                 </dialog>
-                <dialog id="search" class="bg-gray-400 bg-opacity-90 p-6 rounded shadow-lg ml-5 "></dialog>
-            <div class="flex flex-col md:flex-row gap-6">
+                <dialog id="search" class="bg-gray-400 bg-opacity-90 p-6 rounded shadow-lg ml-5 ">
+                    <label for=""></label>//
+                </dialog>
 
-                <div class="flex-1 bg-gray-200 p-4 ">
-                    <h2 class="text-xl font-semibold mb-4 flex justify-center">To Do</h2>
-                    <h4 id ="conteurToDo"></h4>
-                    <ul id="todo-list" class="min-h-[200px] space-y-2">
-                    </ul>
-                </div>
 
-                <div class="flex-1 bg-gray-200 p-4 ">
-                    <h2 class="text-xl font-semibold mb-4 flex justify-center">In Progress</h2>
-                    <h4 id="conteurpro"></h4>
-                    <ul id="progress-list" class="min-h-[200px] space-y-2">
-                    </ul>
-                </div>
+                <div class="flex flex-col md:flex-row gap-6">
 
-                <div class="flex-1 bg-gray-200 p-4 ">
-                    <h2 class="text-xl font-semibold mb-4 flex justify-center">Done</h2>
-                    <h4 id ="conteurDone"></h4>
-                    <ul id="done-list" class="min-h-[200px] space-y-2">
-                    </ul>
+                    <div class="flex-1 bg-gray-200 p-4 ">
+                        <h2 class="text-xl font-semibold mb-4 flex justify-center">To Do</h2>
+                        <h4 id="conteurToDo"></h4>
+                        <ul id="todo-list" class="min-h-[200px] space-y-2">
+                        </ul>
+                    </div>
+
+                    <div class="flex-1 bg-gray-200 p-4 ">
+                        <h2 class="text-xl font-semibold mb-4 flex justify-center">In Progress</h2>
+                        <h4 id="conteurpro"></h4>
+                        <ul id="progress-list" class="min-h-[200px] space-y-2">
+                        </ul>
+                    </div>
+
+                    <div class="flex-1 bg-gray-200 p-4 ">
+                        <h2 class="text-xl font-semibold mb-4 flex justify-center">Done</h2>
+                        <h4 id="conteurDone"></h4>
+                        <ul id="done-list" class="min-h-[200px] space-y-2">
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
+    </main>
 
-       
-<script src="script.js"></script>
+
+    <script src="ui.js" type="module"></script>
 </body>
 
 </html>
