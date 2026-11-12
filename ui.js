@@ -1,4 +1,4 @@
-import { loadCard } from "./api.js"
+import { loadCard, filter } from "./api.js"
 const inputCHercher = document.getElementById("chercher")
 const btnAjouter = document.getElementById("new")
 const dialog = document.getElementById("add")
@@ -33,6 +33,8 @@ function afficher(tab) {
     // console.log(tab[i].status)
 
     if (tab[i].status == "todo") {
+      // const affichetags=document.getElementById("affichetags")
+      // affichetags.textContent=""
       counttoDo++
       // console.log(tab[i].title)
       toDo.innerHTML += `<h2 class="cards"> <strong >Titre:</strong>${tab[i].title}</h2> ===> <h2 class="cards"><strong >Assigne:</strong >${tab[i].assignee}
@@ -42,6 +44,16 @@ function afficher(tab) {
       <p>****************************************************************</p>
 
        `
+      // tab[i].tags.forEach((o) => {
+
+      // const p = document.createElement("span");
+
+      // p.className = "inline-block bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-md mr-2 mb-2";
+
+      // p.textContent = `#${o}`;
+
+      // affichetags.appendChild(p);
+      // });
     }
     else if (tab[i].status == "in-progress") {
       countProg++
@@ -64,6 +76,7 @@ function afficher(tab) {
       <p>****************************************************************</p>
 
        `
+
     }
 
   }
@@ -108,11 +121,11 @@ form.addEventListener("submit", function (event) {
   const Tags = document.getElementById("tags")
   const status = document.getElementById("status")
   const priority = document.getElementById("priority")
-  const description=document.getElementById("desc")
-  const dueDate=document.getElementById("Dudate")
+  const description = document.getElementById("desc")
+  const dueDate = document.getElementById("Dudate")
   const msg = document.createElement("small");
   if (!ValiderText(titre, assignee, Tags)) {
-    msg.textContent = ""
+    msg.remove()
     console.log(invalides)
     invalides.forEach(input => {
       console.log(input.parentElement)
@@ -137,18 +150,20 @@ form.addEventListener("submit", function (event) {
     ObjectA.priority = priority.value
 
   }
-  if (valideDate(dueDate)){
-    ObjectA.dueDate=dueDate.value
+  if (valideDate(dueDate)) {
+    ObjectA.dueDate = dueDate.value
   }
-  if (ValiderText(titre, assignee, Tags) && ValideList(status) && ValideList(priority)&& valideDate(dueDate)) {
-     if(description.value!==null){
-      ObjectA.description=description.value
-     }
+  if (ValiderText(titre, assignee, Tags) && ValideList(status) && ValideList(priority) && valideDate(dueDate)) {
+    if (description.value !== null) {
+      ObjectA.description = description.value
+    }
 
     cards.push(ObjectA)
     console.log(cards)
     afficher(cards)
+    form.reset()
     dialog.close()
+
   }
   // const donnees = Object.fromEntries(new FormData(form));
   // console.log(donnees)
@@ -182,9 +197,9 @@ function ValideList(val) {
     return true
   }
 }
-function valideDate(val){
-  if(val.value==null){
-    val.style.borderColor="red";
+function valideDate(val) {
+  if (val.value == null) {
+    val.style.borderColor = "red";
     return false
   }
   else {
@@ -221,3 +236,26 @@ inputCHercher.addEventListener("input", function () {
 
 })
 
+const filterMember = document.getElementById("filterMember");
+const filterPriority = document.getElementById("filrepriority");
+function appliquerFiltres() {
+
+  const valeurMembre = filterMember.value;
+  const valeurPriority = filterPriority.value;
+
+  filter(valeurPriority, valeurMembre)
+    .then(tasks => {
+      console.log(tasks)
+      afficher(tasks);
+    })
+    .catch(error => {
+      console.log("Impossible de filtrer les tâches :", error);
+    });
+}
+
+filterMember.addEventListener("input", appliquerFiltres)
+
+
+filterPriority.addEventListener("change", appliquerFiltres)
+  console.log("hi")
+;

@@ -1,4 +1,4 @@
- export let data=[]
+
 export function loadCard(afficher, ressailler) {
   fetch('https://flowboard-api-virid.vercel.app/cards', {
     headers: {
@@ -15,7 +15,7 @@ export function loadCard(afficher, ressailler) {
     })// retourne une promise 
 
     .then(data => {
-       console.log("api", data)
+      console.log("api", data)
       afficher(data)
     })
     .catch(error => {
@@ -24,6 +24,40 @@ export function loadCard(afficher, ressailler) {
       ressailler(afficher)
     });
 }
+
+
+
+export function filter(priority, memberId) {
+const API_TASKS = 'https://flowboard-api-virid.vercel.app/members'
+    const params = new URLSearchParams();
+    if (priority !== "all") {
+        params.append("priority", priority);
+    }
+
+    if (memberId !== "all") {
+        params.append("assignee", memberId);
+    }
+
+    const url = `${API_TASKS}?${params.toString()}`;
+
+     return fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Erreur lors du chargement des tâches");
+            }
+             
+            return response.json();
+        })
+        .then(d => {
+      console.log("api", d)
+     
+    })
+        .catch(error => {
+            console.error("Erreur API :", error);
+            throw error;
+        });
+}
+
 
 
 
