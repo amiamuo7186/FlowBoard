@@ -28,7 +28,7 @@ export function loadCard(afficher, ressailler) {
 
 
 export function filter(priority, memberId) {
-const API_TASKS = 'https://flowboard-api-virid.vercel.app/members'
+const API_TASKS = 'https://flowboard-api-virid.vercel.app/cards'
     const params = new URLSearchParams();
     if (priority !== "all") {
         params.append("priority", priority);
