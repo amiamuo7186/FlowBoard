@@ -36,30 +36,31 @@
                     <form class="space-y-4 p-6">
                         <h2 class="text-2xl flex">tache</h2>
                         <label class="block text-sm font-medium text-gray-700" for="titre"> title</label>
-                        <input id="titre" class="mt-1 block w-full border border-gray-300 rounded-md p-2" type="text">
+                        <input id="titre" data-name="title" class="mt-1 block w-full border border-gray-300 rounded-md p-2" type="text">
                         <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
-                        <select name="Status">
+                        <select name="Status" id="status">
                             <option value="">choisir un choix </option>
-                            <option value="TODO">toDo</option>
-                            <option value="INPROGRESS">in Progress</option>
-                            <option value="DONE">done</option>
+                            <option value="todo">toDo</option>
+                            <option value= "in-progress">in Progress</option>
+                            <option value="done">done</option>
                         </select>
                         <label for="desc" class="block text-sm font-medium text-gray-700">Description</label>
                         <textarea id="desc" placeholder="votre descrption"></textarea>
                         <label for="priority" class="block text-sm font-medium text-gray-700">Priority</label>
-                        <select name="Priority">
+                        <select name="Priority" id="priority">
                             <option value="">choisir un choix </option>
-                            <option value="HIGH">high</option>
-                            <option value="MEDIUM">medium</option>
-                            <option value="LOW">low</option>
+                            <option value="high">high</option>
+                            <option value="medium">medium</option>
+                            <option value= "low">low</option>
                         </select>
                         <label for="assign" class="block text-sm font-medium text-gray-700">assignee</label>
-                        <input type="text" id="assign" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+                        <input type="text" id="assign" data-name= "assignee" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
                         <label type="Dudate" class="block text-sm font-medium text-gray-700">dueDate</label>
                         <input type="date" id="Dudate">
                         <label for="tags" class="block text-sm font-medium text-gray-700">tags</label>
-                        <input type="text" id="tags" class="mt-1 block w-full border border-gray-300 rounded-md p-2" >
+                        <input type="text" id="tags" data-name="tags" class="mt-1 block w-full border border-gray-300 rounded-md p-2" >
                         <button type="submit" class="block text-sm font-medium text-gray-700">add</button>
+                        <button type="button" class="block text-sm font-medium text-gray-700"></button>
                     </form>
                 </dialog>
                

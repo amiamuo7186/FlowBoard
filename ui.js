@@ -11,15 +11,15 @@ const toDo = document.getElementById("todo-list")
 const prog = document.getElementById("progress-list")
 const don = document.getElementById("done-list")
 const form = document.querySelector("form")
-const resultat=document.getElementById("resultat")
+const resultat = document.getElementById("resultat")
 let cards = null
-
-
+let ObjectA = {}
 const RejexText = /^[a-zA-ZÀ-ÿ\s'-]{2,50}$/;
 loadCard((data) => {
-        cards = data;
-        console.log(cards)
-        afficher(cards)},masquer)
+  cards = data;
+  console.log(cards)
+  afficher(cards)
+}, masquer)
 console.log(cards)// il reste vide 
 function afficher(tab) {
 
@@ -49,6 +49,7 @@ function afficher(tab) {
       prog.innerHTML += `<h2 class="cards"> <strong >Titre:</strong>${tab[i].title}</h2> ===> <h2 class="cards"><strong >Assigne:</strong >${tab[i].assignee}
       <p><strong>Description:</strong> ${tab[i].description}</p>
       <p><strong>Priority:</strong>${tab[i].priority}</p>
+      <p><strong>DueDate:</strong> ${tab[i].dueDate}</p>
       <p>****************************************************************</p>
 
        `
@@ -59,6 +60,7 @@ function afficher(tab) {
       don.innerHTML += `<h2 class="cards"> <strong >Titre:</strong>${tab[i].title}</h2> ===> <h2 class="cards"><strong >Assigne:</strong >${tab[i].assignee}
       <p><strong>Description:</strong> ${tab[i].description}</p>
       <p><strong>Priority:</strong>${tab[i].priority}</p>
+      <p><strong>DueDate:</strong> ${tab[i].dueDate}</p>
       <p>****************************************************************</p>
 
        `
@@ -103,48 +105,92 @@ form.addEventListener("submit", function (event) {
   event.preventDefault()
   const titre = document.getElementById("titre")
   const assignee = document.getElementById("assign")
-  const DueDate = document.getElementById("Dudate")
   const Tags = document.getElementById("tags")
-  const valeurTitre = titre.value
-  const valeurAssignee = assignee.value
-  const valeurtags = Tags.value
-  const valeurDueDate = DueDate.value
+  const status = document.getElementById("status")
+  const priority = document.getElementById("priority")
+  const description=document.getElementById("desc")
+  const dueDate=document.getElementById("Dudate")
+  const msg = document.createElement("small");
   if (!ValiderText(titre, assignee, Tags)) {
+    msg.textContent = ""
     console.log(invalides)
-     invalides.forEach(input => {
+    invalides.forEach(input => {
       console.log(input.parentElement)
-        const msg = document.createElement("small");
-        msg.style.color = "red";
-        input.style.borderColor = "red"
-        msg.textContent = "Veuillez remplir le champ avec un format valide.";
-        const parent=input.parentElement
-         parent.insertBefore(msg, input.nextSibling)
+      msg.style.color = "red";
+      input.style.borderColor = "red"
+      msg.textContent = "Veuillez remplir le champ avec un format valide.";
+      const parent = input.parentElement
+      parent.insertBefore(msg, input.nextSibling)
+
     });
- console.log("faux")
+    console.log("faux")
   }
   else {
+
+    msg.remove();
     console.log("vrai")
   }
+  if (ValideList(status)) {
+    ObjectA.status = status.value
+  }
+  if (ValideList(priority)) {
+    ObjectA.priority = priority.value
 
+  }
+  if (valideDate(dueDate)){
+    ObjectA.dueDate=dueDate.value
+  }
+  if (ValiderText(titre, assignee, Tags) && ValideList(status) && ValideList(priority)&& valideDate(dueDate)) {
+     if(description.value!==null){
+      ObjectA.description=description.value
+     }
+
+    cards.push(ObjectA)
+    console.log(cards)
+    afficher(cards)
+    dialog.close()
+  }
+  // const donnees = Object.fromEntries(new FormData(form));
+  // console.log(donnees)
 })
 let invalides = [];
 function ValiderText(...values) {
-    invalides=[]
-    let ok=true
-    for (let i = 0; i < values.length; i++) {
-        if (!RejexText.test(values[i].value)) {
-          ok=false
-            invalides.push(values[i]);
-        }
+  console.log(values)
+  invalides = []
+  let ok = true
+  for (let i = 0; i < values.length; i++) {
+    if (!RejexText.test(values[i].value)) {
+      ok = false
+      invalides.push(values[i]);
     }
-
-
-console.log(ok)
-    return ok
+    else {
+      ObjectA[values[i].dataset.name] = values[i].value
+    }
+  }
+  console.log(ObjectA)
+  return ok
 }
+function ValideList(val) {
+  if (val.value == "") {
+    val.style.borderColor = "red"
 
+    return false
+  }
+  else {
+    val.style.borderColor = "green"
 
-
+    return true
+  }
+}
+function valideDate(val){
+  if(val.value==null){
+    val.style.borderColor="red";
+    return false
+  }
+  else {
+    return true
+  }
+}
 //************ live search 
 btnChercher.addEventListener("click", function () {
   dialog2.showModal()
@@ -157,21 +203,21 @@ dialog2.addEventListener("click", (e) => {
 })
 inputCHercher.addEventListener("input", function () {
   const valeur = inputCHercher.value.toLowerCase()
-  
-  let cardsDemande=cards.filter(c=>c. title.toLowerCase().includes(valeur))
-  
-  resultat.innerHTML=""
-  if(valeur==""){
-    cardsDemande=[]
-    resultat.innerHTML="<p>Choisir un choix</p>"
+
+  let cardsDemande = cards.filter(c => c.title.toLowerCase().includes(valeur))
+
+  resultat.innerHTML = ""
+  if (valeur == "") {
+    cardsDemande = []
+    resultat.innerHTML = "<p>Choisir un choix</p>"
   }
-cardsDemande.forEach(c => {
-  resultat.innerHTML+=`<h2 class="cards"> <strong >Titre:</strong>${c.title}</h2> ===> <h2 class="cards"><strong >Assigne:</strong >${c.assignee}
+  cardsDemande.forEach(c => {
+    resultat.innerHTML += `<h2 class="cards"> <strong >Titre:</strong>${c.title}</h2> ===> <h2 class="cards"><strong >Assigne:</strong >${c.assignee}
       <p><strong>Description:</strong> ${c.description}</p>
       <p><strong>Priority:</strong>${c.priority}</p>
       <p><strong>DueDate:</strong> ${c.dueDate}</p>
       <p>****************************************************************</p>`
-});
+  });
 
 })
 
