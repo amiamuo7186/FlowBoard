@@ -28,10 +28,12 @@ function afficher(tab) {
   let counttoDo = 0
   let countProg = 0
   let countDone = 0
-
+toDo.textContent=""
+prog.textContent=""
+don.textContent=""
   for (let i = 0; i < tab.length; i++) {
     // console.log(tab[i].status)
-
+     
     if (tab[i].status == "todo") {
       // const affichetags=document.getElementById("affichetags")
       // affichetags.textContent=""
@@ -58,6 +60,7 @@ function afficher(tab) {
     else if (tab[i].status == "in-progress") {
       countProg++
       // console.log(tab[i].title)
+      
       prog.innerHTML += `<h2 class="cards"> <strong >Titre:</strong>${tab[i].title}</h2> ===> <h2 class="cards"><strong >Assigne:</strong >${tab[i].assignee}
       <p><strong>Description:</strong> ${tab[i].description}</p>
       <p><strong>Priority:</strong>${tab[i].priority}</p>
@@ -69,6 +72,7 @@ function afficher(tab) {
     else {
       countDone++
       // console.log(tab[i].title)
+      
       don.innerHTML += `<h2 class="cards"> <strong >Titre:</strong>${tab[i].title}</h2> ===> <h2 class="cards"><strong >Assigne:</strong >${tab[i].assignee}
       <p><strong>Description:</strong> ${tab[i].description}</p>
       <p><strong>Priority:</strong>${tab[i].priority}</p>
@@ -244,13 +248,17 @@ function appliquerFiltres() {
   const valeurPriority = filterPriority.value;
 
   filter(valeurPriority, valeurMembre)
+  const tabFilter=filter(valeurPriority, valeurMembre)
+       
     .then(tasks => {
       console.log(tasks)
-      afficher(tasks);
+      afficher(tasks)
     })
     .catch(error => {
       console.log("Impossible de filtrer les tâches :", error);
     });
+    console.log(tabFilter)
+    
 }
 
 filterMember.addEventListener("input", appliquerFiltres)

@@ -34,7 +34,7 @@ const API_TASKS = 'https://flowboard-api-virid.vercel.app/cards'
         params.append("priority", priority);
     }
 
-    if (memberId !== "all") {
+    if (memberId && memberId !== "all") {
         params.append("assignee", memberId);
     }
 
@@ -48,14 +48,14 @@ const API_TASKS = 'https://flowboard-api-virid.vercel.app/cards'
              
             return response.json();
         })
-        .then(d => {
+        /*.then(d => {
       console.log("api", d)
      
     })
         .catch(error => {
             console.error("Erreur API :", error);
             throw error;
-        });
+        });*/
 }
 
 
