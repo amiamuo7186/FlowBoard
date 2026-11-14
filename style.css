@@ -1,0 +1,31 @@
+.cards {
+    display: inline;
+
+}
+.extremite{
+    display: flex;
+    justify-content: flex-end;
+    color: brown;
+    font-weight: bold;
+}
+.ressayer{
+    color: red;
+    background-color: black;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height:70px;
+}
+.ressayer button{
+    border-radius: 5px;
+    background-color: red;
+    color: azure;
+}
+.ressayer p{
+    margin-left: 50px;
+    font-size: larger;
+}
+.erreur{
+    border-color: red;
+    color: red;
+}

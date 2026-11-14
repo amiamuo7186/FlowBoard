@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>FlowBoard</title>
+</head>
+
+<body>
+
+    <script src="ui.js" type="module"></script>
+    <div hidden id="error">
+        <span class="flex flex-col justify-between ">
+            <p
+                class=" text-3xl  bg-red-100  border-red-400 text-red-700 px-4 py-3 rounded relative flex justify-center">
+                ressailler apres, un probleme est reçue</p>
+            <button type="button" id="ressailler" class="btn-error m-10 border border-red-400">ressailler</button>
+        </span>
+    </div>
+    <main id="cards">
+        <div class="bg-gray-100 min-h-screen p-8">
+            <div>
+                <span class="flex flex-row justify-between">
+                    <h1 class="text-3xl font-bold  mb-8">Kanban Board</h1>
+                    <button type="button" id="cherche">🔍chercher</button>
+                    <label for="filterMember">Filter Membre
+                    <input type="text" id="filterMember"></label>
+                    <select id="filrepriority">
+                        <option value="all">tous les priority</option>
+                        <option value="high">high</option>
+                        <option value="medium">medium</option>
+                        <option value="low">low</option>
+                    </select>
+                    <button type="button" id="new"> +ajouter </button>
+
+                </span>
+                <dialog id="search" class="bg-gray-400 bg-opacity-90 p-6 rounded shadow-lg mr-200 mt-10 ">
+                    <label for="chercher" class="block text-sm font-medium text-gray-700">CHERCHER</label>
+                    <input type="text" id="chercher" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+                    <div id="resultat"></div>
+
+                </dialog>
+                <dialog id="add" class="bg-gray-400 bg-opacity-90 p-6 rounded shadow-lg ml-5 ">
+                    <form class="space-y-4 p-6">
+                        <h2 class="text-2xl flex">tache</h2>
+                        <label class="block text-sm font-medium text-gray-700" for="titre"> title</label>
+                        <input id="titre" data-name="title"
+                            class="mt-1 block w-full border border-gray-300 rounded-md p-2" type="text">
+                        <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+                        <select name="Status" id="status">
+                            <option value="">choisir un choix </option>
+                            <option value="todo">toDo</option>
+                            <option value="in-progress">in Progress</option>
+                            <option value="done">done</option>
+                        </select>
+                        <label for="desc" class="block text-sm font-medium text-gray-700">Description</label>
+                        <textarea id="desc" placeholder="votre descrption"></textarea>
+                        <label for="priority" class="block text-sm font-medium text-gray-700">Priority</label>
+                        <select name="Priority" id="priority">
+                            <option value="">choisir un choix </option>
+                            <option value="high">high</option>
+                            <option value="medium">medium</option>
+                            <option value="low">low</option>
+                        </select>
+                        <label for="assign" class="block text-sm font-medium text-gray-700">assignee</label>
+                        <input type="text" id="assign" data-name="assignee"
+                            class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+                        <label type="Dudate" class="block text-sm font-medium text-gray-700">dueDate</label>
+                        <input type="date" id="Dudate">
+                        <label for="tags" class="block text-sm font-medium text-gray-700">tags</label>
+                        <input type="text" id="tags" data-name="tags"
+                            class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+                        <button type="submit" class="block text-sm font-medium text-gray-700">add</button>
+                        <button type="button" class="block text-sm font-medium text-gray-700"></button>
+                    </form>
+                </dialog>
+
+
+
+                <div class="flex flex-col md:flex-row gap-6">
+
+                    <div class="flex-1 bg-gray-200 p-4 ">
+                        <h2 class="text-xl font-semibold mb-4 flex justify-center">To Do</h2>
+                        <h4 id="conteurToDo"></h4>
+                        <ul id="todo-list" class="min-h-[200px] space-y-2">
+
+                        </ul>
+                        <span id="affichetags"></span>
+                    </div>
+
+                    <div class="flex-1 bg-gray-200 p-4 ">
+                        <h2 class="text-xl font-semibold mb-4 flex justify-center">In Progress</h2>
+                        <h4 id="conteurpro"></h4>
+                        <ul id="progress-list" class="min-h-[200px] space-y-2">
+                        </ul>
+                    </div>
+
+                    <div class="flex-1 bg-gray-200 p-4 ">
+                        <h2 class="text-xl font-semibold mb-4 flex justify-center">Done</h2>
+                        <h4 id="conteurDone"></h4>
+                        <ul id="done-list" class="min-h-[200px] space-y-2">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+    </main>
+
+
+
+</body>
+
+</html>
