@@ -28,58 +28,104 @@ function afficher(tab) {
   let counttoDo = 0
   let countProg = 0
   let countDone = 0
-toDo.textContent=""
-prog.textContent=""
-don.textContent=""
+  toDo.textContent = ""
+  prog.textContent = ""
+  don.textContent = ""
   for (let i = 0; i < tab.length; i++) {
-    // console.log(tab[i].status)
-     
+
     if (tab[i].status == "todo") {
-      // const affichetags=document.getElementById("affichetags")
-      // affichetags.textContent=""
+      const affichetags=document.getElementById("affichetags")
+      
       counttoDo++
       // console.log(tab[i].title)
-      toDo.innerHTML += `<h2 class="cards"> <strong >Titre:</strong>${tab[i].title}</h2> ===> <h2 class="cards"><strong >Assigne:</strong >${tab[i].assignee}
-      <p><strong>Description:</strong> ${tab[i].description}</p>
-      <p><strong>Priority:</strong>${tab[i].priority}</p>
-      <p><strong>DueDate:</strong> ${tab[i].dueDate}</p>
-      <p>****************************************************************</p>
+ toDo.innerHTML += `
+    <h2 class="cards">
+        <strong>Titre:</strong>${tab[i].title}
+        ===> <strong>Assigne:</strong>${tab[i].assignee}
+    </h2>
 
-       `
-      // tab[i].tags.forEach((o) => {
+    <p><strong>Description:</strong> ${tab[i].description}</p>
+    <p><strong>Priority:</strong> ${tab[i].priority}</p>
+    <p><strong>DueDate:</strong> ${tab[i].dueDate}</p>
+`;
 
-      // const p = document.createElement("span");
+tab[i].tags.forEach((o) => {
+    const p = document.createElement("span");
 
-      // p.className = "inline-block bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-md mr-2 mb-2";
+    p.className = "inline-block bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-md mr-2 mb-2";
+    p.textContent = `#${o}`;
 
-      // p.textContent = `#${o}`;
+    toDo.appendChild(p);
+});
 
-      // affichetags.appendChild(p);
-      // });
+
+toDo.innerHTML += `
+    <p>****************************************************************</p>
+`;
     }
     else if (tab[i].status == "in-progress") {
       countProg++
       // console.log(tab[i].title)
-      
-      prog.innerHTML += `<h2 class="cards"> <strong >Titre:</strong>${tab[i].title}</h2> ===> <h2 class="cards"><strong >Assigne:</strong >${tab[i].assignee}
-      <p><strong>Description:</strong> ${tab[i].description}</p>
-      <p><strong>Priority:</strong>${tab[i].priority}</p>
-      <p><strong>DueDate:</strong> ${tab[i].dueDate}</p>
-      <p>****************************************************************</p>
 
-       `
+prog.innerHTML += `
+    <h2 class="cards">
+        <strong>Titre:</strong> ${tab[i].title}
+        ===> <strong>Assigne:</strong> ${tab[i].assignee}
+    </h2>
+
+    <p><strong>Description:</strong> ${tab[i].description}</p>
+    <p><strong>Priority:</strong> ${tab[i].priority}</p>
+    <p><strong>DueDate:</strong> ${tab[i].dueDate}</p>
+`;
+
+tab[i].tags.forEach((o) => {
+
+    const p = document.createElement("span");
+
+    p.className = "inline-block bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-md mr-2 mb-2";
+
+    p.textContent = `#${o}`;
+
+    prog.appendChild(p);
+
+});
+
+prog.innerHTML += `
+    <p>****************************************************************</p>
+`;
     }
     else {
       countDone++
       // console.log(tab[i].title)
-      
-      don.innerHTML += `<h2 class="cards"> <strong >Titre:</strong>${tab[i].title}</h2> ===> <h2 class="cards"><strong >Assigne:</strong >${tab[i].assignee}
-      <p><strong>Description:</strong> ${tab[i].description}</p>
-      <p><strong>Priority:</strong>${tab[i].priority}</p>
-      <p><strong>DueDate:</strong> ${tab[i].dueDate}</p>
-      <p>****************************************************************</p>
 
-       `
+   don.innerHTML += `
+    <h2 class="cards">
+        <strong>Titre:</strong> ${tab[i].title}
+        ===> <strong>Assigne:</strong> ${tab[i].assignee}
+    </h2>
+
+    <p><strong>Description:</strong> ${tab[i].description}</p>
+    <p><strong>Priority:</strong> ${tab[i].priority}</p>
+    <p><strong>DueDate:</strong> ${tab[i].dueDate}</p>
+`;
+
+// Afficher les tags
+tab[i].tags.forEach((o) => {
+
+    const p = document.createElement("span");
+
+    p.className = "inline-block bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-md mr-2 mb-2";
+
+    p.textContent = `#${o}`;
+
+    don.appendChild(p);
+
+});
+
+// Séparateur après les tags
+don.innerHTML += `
+    <p>****************************************************************</p>
+`;
 
     }
 
@@ -248,8 +294,8 @@ function appliquerFiltres() {
   const valeurPriority = filterPriority.value;
 
   filter(valeurPriority, valeurMembre)
-  const tabFilter=filter(valeurPriority, valeurMembre)
-       
+  const tabFilter = filter(valeurPriority, valeurMembre)
+
     .then(tasks => {
       console.log(tasks)
       afficher(tasks)
@@ -257,13 +303,13 @@ function appliquerFiltres() {
     .catch(error => {
       console.log("Impossible de filtrer les tâches :", error);
     });
-    console.log(tabFilter)
-    
+  console.log(tabFilter)
+
 }
 
 filterMember.addEventListener("input", appliquerFiltres)
 
 
 filterPriority.addEventListener("change", appliquerFiltres)
-  console.log("hi")
-;
+console.log("hi")
+  ;
