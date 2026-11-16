@@ -1,4 +1,4 @@
-import { loadCard, filter } from "./api.js"
+import { loadCard, filter } from "./service/api.js"
 const inputCHercher = document.getElementById("chercher")
 const btnAjouter = document.getElementById("new")
 const dialog = document.getElementById("add")
