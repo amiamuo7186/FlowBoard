@@ -1,53 +1,64 @@
 
-export function loadCard(afficher, ressailler) {
-  fetch('https://flowboard-api-virid.vercel.app/cards', {
+export async function loadCard(afficher, ressailler) {
+  
+  try{
+    const response= await axios.get('https://flowboard-api-virid.vercel.app/cards', {
     headers: {
       'X-Workspace': 'public'
     }
-  })// fetch retourne une promise 
+  })
+  afficher(response.data)
+  console.log(response.data)
+  }
+  catch(error){
+    console.log(error)
+    ressailler(afficher)
+  }
+  
+ // fetch retourne une promise 
 
 
-    .then(response => {
-      if (!response.ok)// pour handler les erreur n'ont pas traiter par catch 
-        throw new Error(response.status)
+    // .then(response => {
+    //   if (!response.ok)// pour handler les erreur n'ont pas traiter par catch 
+    //     throw new Error(response.status)
 
-      return response.json()
-    })// retourne une promise 
+    //   return response.json()
+    // })// retourne une promise 
 
-    .then(data => {
-      console.log("api", data)
-      afficher(data)
-    })
-    .catch(error => {
+    // .then(data => {
+    //   console.log("api", data)
+    //   afficher(data)
+    // })
+    // .catch(error => {
 
-      console.log("Erreur :", error);
-      ressailler(afficher)
-    });
+    //   console.log("Erreur :", error);
+    //   ressailler(afficher)
+    // });
 }
 
 
 
-export function filter(priority, memberId) {
-const API_TASKS = 'https://flowboard-api-virid.vercel.app/cards'
-    const params = new URLSearchParams();
+export async function filter(priority, memberId) {
+
+    // const params = new URLSearchParams();
+    const objetsFilter={}
     if (priority !== "all") {
-        params.append("priority", priority);
+       objetsFilter.priority= priority;
     }
 
     if (memberId && memberId !== "all") {
-        params.append("assignee", memberId);
+        objetsFilter.assignee= memberId;
     }
 
-    const url = `${API_TASKS}?${params.toString()}`;
+   
 
-     return fetch(url)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Erreur lors du chargement des tâches");
-            }
-             
-            return response.json();
-        })
+     const response= await axios.get('https://flowboard-api-virid.vercel.app/cards', {
+    headers: {
+      'X-Workspace': 'public'
+    },
+    params:objetsFilter,
+  
+  } )
         /*.then(d => {
       console.log("api", d)
      
@@ -56,6 +67,7 @@ const API_TASKS = 'https://flowboard-api-virid.vercel.app/cards'
             console.error("Erreur API :", error);
             throw error;
         });*/
+        return response.data
 }
 
 
