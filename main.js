@@ -10,7 +10,7 @@ import {
   Convertir
   
 } from "./ui.js";
-import { loadCard, filter, recupre_data,MOdifierCarte } from "./service/api.js";
+import { loadCard, filter, recupre_data,MOdifierCarte,glissement } from "./service/api.js";
 let cards = null;
 const dialog2 = document.getElementById("search");
 const resultat = document.getElementById("resultat");
@@ -25,28 +25,52 @@ const datae = await loadCard();
 
 afficher(datae);
 const BTNMODIFY = document.querySelectorAll("[data-id]");
-const BTNNEXT=document.querySelectorAll("[data-statusN]");
-const BTNPRE=document.querySelectorAll("[data-statusP]")
-console.log(BTNNEXT)
-console.log(BTNPRE)
-BTNNEXT.forEach(n=> {
-  n.addEventListener("click",function(){
-    console.log("hiiiiiiii")
-        const id = Number(n.dataset.id);
 
+
+
+document.addEventListener("click", async function(e) {
+    const next = e.target.closest("[data-idn]");
+    if (next) {
+        const id = Number(next.dataset.idn);
         const card = datae.find(c => c.id === id);
+        if (!card) return;
+        let newStatus;
+        if (card.status === "todo") {
+            newStatus = "in-progress";
+        } 
+        else if (card.status === "in-progress") {
+            newStatus = "done";
+        }
 
-        if (card && card.status === "todo") {
-
-            card.status = "in-progress";
-
+        if (newStatus) {
+            await glissement(id, newStatus);
+            card.status = newStatus;
             afficher(datae);
+        }
+    }
+    const previous = e.target.closest("[data-idp]");
+    if (previous) {
+        const id = Number(previous.dataset.idp);
+        const card = datae.find(c => c.id === id);
+        if (!card) return;
+        let newStatus;
+        if (card.status === "done") {
+            newStatus = "in-progress";
+        } 
+        else if (card.status === "in-progress") {
+            newStatus = "todo";
+        }
+
+        if (newStatus) {
+            await glissement(id, newStatus);
+            card.status = newStatus;
+            
+            afficher(datae);
+        }
+    }
+
 });
- BTNPRE.forEach(p => {
-  p.addEventListener("click",function(){
-    console.log("hiiiiiiii")
-  }) 
-});
+
 BTNMODIFY.forEach((element) => {
   element.addEventListener("click", async function () {
     btnAjout.hidden = true;

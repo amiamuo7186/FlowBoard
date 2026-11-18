@@ -19,8 +19,8 @@ export function afficher(tab) {
   for (let i = 0; i < tab.length; i++) {
     const btnNext = document.createElement("button");
     const btnPreviuos = document.createElement("button");
-    btnNext.setAttribute("data-id", tab[i].id);
-    btnPreviuos.setAttribute("data-id", tab[i].id);
+    btnNext.setAttribute("data-idn", tab[i].id);
+    btnPreviuos.setAttribute("data-idp", tab[i].id);
     btnNext.textContent = "➡️";
     btnPreviuos.textContent = "⬅️";
     const btnModify = document.createElement("button");
