@@ -1,5 +1,5 @@
 
-export async function loadCard(afficher, ressailler) {
+export async function loadCard() {
   
   try{
     const response= await axios.get('https://flowboard-api-virid.vercel.app/cards', {
@@ -7,40 +7,14 @@ export async function loadCard(afficher, ressailler) {
       'X-Workspace': 'public'
     }
   })
-  afficher(response.data)
-  console.log(response.data)
+   return response.data
   }
   catch(error){
-    console.log(error)
-    ressailler(afficher)
+    return error
   }
-  
- // fetch retourne une promise 
 
-
-    // .then(response => {
-    //   if (!response.ok)// pour handler les erreur n'ont pas traiter par catch 
-    //     throw new Error(response.status)
-
-    //   return response.json()
-    // })// retourne une promise 
-
-    // .then(data => {
-    //   console.log("api", data)
-    //   afficher(data)
-    // })
-    // .catch(error => {
-
-    //   console.log("Erreur :", error);
-    //   ressailler(afficher)
-    // });
 }
-
-
-
 export async function filter(priority, memberId) {
-
-    // const params = new URLSearchParams();
     const objetsFilter={}
     if (priority !== "all") {
        objetsFilter.priority= priority;
@@ -49,9 +23,6 @@ export async function filter(priority, memberId) {
     if (memberId && memberId !== "all") {
         objetsFilter.assignee= memberId;
     }
-
-   
-
      const response= await axios.get('https://flowboard-api-virid.vercel.app/cards', {
     headers: {
       'X-Workspace': 'public'
@@ -59,17 +30,35 @@ export async function filter(priority, memberId) {
     params:objetsFilter,
   
   } )
-        /*.then(d => {
-      console.log("api", d)
-     
-    })
-        .catch(error => {
-            console.error("Erreur API :", error);
-            throw error;
-        });*/
+
         return response.data
 }
+export async function recupre_data(id) {
+  return  await axios.get('https://flowboard-api-virid.vercel.app/cards/'+id )
+}
 
+//PUT Modifier La carte
 
+export async function  MOdifierCarte(id,cards){
+
+const options = {
+  method: 'PUT',
+  url: 'https://flowboard-api-virid.vercel.app/cards/'+id+'?password=1234',
+  headers: {
+    'X-Workspace': 'public',
+    'Content-Type': 'application/json'
+  },
+  data: cards
+}
+
+try {
+  const { data } = await axios.request(options)
+  return data
+} catch (error) {
+  console.error(error)
+  throw error
+
+}
+}
 
 

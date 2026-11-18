@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <title>FlowBoard</title>
-    <script src="ui.js" type="module"></script>
+    <script src="main.js" type="module"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="./service/api.js" type="module"></script>
 </head>
 
 <body>
     
-    <script src="ui.js" type="module"></script>
+    <!-- <script src="ui.js" type="module"></script> -->
     <div hidden id="error">
         <span class="flex flex-col justify-between ">
             <p
@@ -36,6 +36,7 @@
                         <option value="low">low</option>
                     </select>
                     <button type="button" id="new"> +ajouter </button>
+                   
 
                 </span>
                 <dialog id="search" class="bg-gray-400 bg-opacity-90 p-6 rounded shadow-lg mr-200 mt-10 ">
@@ -45,43 +46,45 @@
 
                 </dialog>
                 <dialog id="add" class="bg-gray-400 bg-opacity-90 p-6 rounded shadow-lg ml-5 ">
-                    <form class="space-y-4 p-6">
+                    <form  id="form_Saisie" class="space-y-4 p-6">
+                        <input type="hidden" id="masquer">
                         <h2 class="text-2xl flex">tache</h2>
                         <label class="block text-sm font-medium text-gray-700" for="titre"> title</label>
-                        <input id="titre" data-name="title"
+                        <input id="titre" name="title"
                             class="mt-1 block w-full border border-gray-300 rounded-md p-2" type="text">
                         <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
-                        <select name="Status" id="status">
+                        <select name="status" id="status">
                             <option value="">choisir un choix </option>
                             <option value="todo">toDo</option>
                             <option value="in-progress">in Progress</option>
                             <option value="done">done</option>
                         </select>
                         <label for="desc" class="block text-sm font-medium text-gray-700">Description</label>
-                        <textarea id="desc" placeholder="votre descrption"></textarea>
+                        <textarea id="desc" name="description"  placeholder="votre descrption"></textarea>
                         <label for="priority" class="block text-sm font-medium text-gray-700">Priority</label>
-                        <select name="Priority" id="priority">
+                        <select name="priority" id="priority">
                             <option value="">choisir un choix </option>
                             <option value="high">high</option>
                             <option value="medium">medium</option>
                             <option value="low">low</option>
                         </select>
                         <label for="assign" class="block text-sm font-medium text-gray-700">assignee</label>
-                        <input type="text" id="assign" data-name="assignee"
+                        <input type="text" id="assign" name="assignee"
                             class="mt-1 block w-full border border-gray-300 rounded-md p-2">
                         <label type="Dudate" class="block text-sm font-medium text-gray-700">dueDate</label>
-                        <input type="date" id="Dudate">
+                        <input type="date" id="Dudate" name="dueDate">
                         <label for="tags" class="block text-sm font-medium text-gray-700">tags</label>
-                        <input type="text" id="tags" data-name="tags"
+                        <input type="text" id="tags" name="tags"
                             class="mt-1 block w-full border border-gray-300 rounded-md p-2">
-                        <button type="submit" class="block text-sm font-medium text-gray-700">add</button>
-                        <button type="button" class="block text-sm font-medium text-gray-700"></button>
+                        
+                        <button  type="button" id="modif" class="  text-sm font-medium text-gray-700">update</button>
+                        <button hidden type="submit" id="btnajout" class=" text-sm font-medium text-gray-700">add</button>
                     </form>
                 </dialog>
 
 
 
-                <div class="flex flex-col md:flex-row gap-6">
+                <div  id =tasks class="flex flex-col md:flex-row gap-6">
 
                     <div class="flex-1 bg-gray-200 p-4 ">
                         <h2 class="text-xl font-semibold mb-4 flex justify-center">To Do</h2>
