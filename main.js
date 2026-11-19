@@ -27,13 +27,11 @@ const btnRess = document.getElementById("ressailler");
 const btnUpdate = document.getElementById("modif");
 const btnAjout = document.getElementById("btnajout");
 const form = document.getElementById("form_Saisie");
-
 const datae = await loadCard();
-
 afficher(datae);
-const BTNMODIFY = document.querySelectorAll("[data-id]"); // avant affichage reste node vide
-const BTNDELETE = document.querySelectorAll("[data-idd]");
-console.log(BTNDELETE);
+// const BTNMODIFY = document.querySelectorAll("[data-id]"); // avant affichage reste node vide
+// const BTNDELETE = document.querySelectorAll("[data-idd]");
+// console.log(BTNDELETE);
 document.addEventListener("click", async function (e) {
   const next = e.target.closest("[data-idn]");
   if (next) {
@@ -72,14 +70,13 @@ document.addEventListener("click", async function (e) {
       afficher(datae);
     }
   }
-});
-BTNMODIFY.forEach((element) => {
-  element.addEventListener("click", async function () {
-    btnAjout.hidden = true;
+  const modifier=e.target.closest("[data-id]");
+  if (modifier){
+        btnAjout.hidden = true;
     btnUpdate.hidden = false;
     dialog.showModal();
-    let { data } = await recupre_data(element.dataset.id);
-    btnUpdate.setAttribute("data-id", element.dataset.id);
+    let {data} = await recupre_data(modifier.dataset.id);
+    btnUpdate.setAttribute("data-id", modifier.dataset.id);
 
     document.querySelector('[name="title"]').value = data.title;
     document.querySelector('[name="description"]').value = data.description;
@@ -88,11 +85,12 @@ BTNMODIFY.forEach((element) => {
     document.querySelector('[name="priority"]').value = data.priority;
     document.querySelector('[name="dueDate"]').value = data.dueDate;
     document.querySelector('[name="tags"]').value = data.tags;
-  });
-});
-BTNDELETE.forEach((d) => {
-  d.addEventListener("click", async function () {
-    let idDeltete = d.dataset.idd;
+  }
+  const suprime=e.target.closest("[data-idd]");
+  if (suprime){
+    const msg= document.getElementById("message d'erreur")
+    let idDeltete = suprime.dataset.idd;
+    console.log(idDeltete)
     Swal.fire({
       title: "vous etre sur ",
       text: "voulez vous suprimer la tache ",
@@ -103,18 +101,76 @@ BTNDELETE.forEach((d) => {
       confirmButtonText: "Oui,suprime",
     }).then(async (result) => {
       if (result.isConfirmed) {
+        try{
+        msg.textContent=""
+        await Delete(idDeltete);
+        const datae = await loadCard();
+        afficher(datae);
         Swal.fire({
           title: "Deleted!",
           text: "Votre tache etait suprimée.",
           icon: "success",
         });
-        await Delete(idDeltete);
-        const datae = await loadCard();
-        afficher(datae);
+        
+        }
+        catch(error){
+          msg.textContent = "Erreur : impossible de supprimer cette carte."
+        }
       }
     });
-  });
+  }
 });
+// BTNMODIFY.forEach((element) => {
+//   element.addEventListener("click", async function () {
+//     btnAjout.hidden = true;
+//     btnUpdate.hidden = false;
+//     dialog.showModal();
+//     let {data} = await recupre_data(element.dataset.id);
+//     btnUpdate.setAttribute("data-id", element.dataset.id);
+
+//     document.querySelector('[name="title"]').value = data.title;
+//     document.querySelector('[name="description"]').value = data.description;
+//     document.querySelector('[name="assignee"]').value = data.assignee;
+//     document.querySelector('[name="status"]').value = data.status;
+//     document.querySelector('[name="priority"]').value = data.priority;
+//     document.querySelector('[name="dueDate"]').value = data.dueDate;
+//     document.querySelector('[name="tags"]').value = data.tags;
+//   });
+// });
+
+// BTNDELETE.forEach((d) => {
+//   d.addEventListener("click", async function () {
+//           const msg= document.getElementById("message d'erreur")
+//     let idDeltete = d.dataset.idd;
+//     Swal.fire({
+//       title: "vous etre sur ",
+//       text: "voulez vous suprimer la tache ",
+//       icon: "warning",
+//       showCancelButton: true,
+//       confirmButtonColor: "#3085d6",
+//       cancelButtonColor: "#d33",
+//       confirmButtonText: "Oui,suprime",
+//     }).then(async (result) => {
+//       if (result.isConfirmed) {
+//         Swal.fire({
+//           title: "Deleted!",
+//           text: "Votre tache etait suprimée.",
+//           icon: "success",
+//         });
+//         try{
+        
+//         await Delete(idDeltete);
+//         const datae = await loadCard();
+//         afficher(datae);
+//         }
+//         catch(error){
+//           msg.textContent = "Erreur : impossible de supprimer cette carte."
+//         }
+
+//       }
+//     });
+//   });
+// });
 btnRess.addEventListener("click", () => ressailler(afficher, masquer));
 dialog.addEventListener("click", (e) => {
   if (e.target === dialog) {
@@ -216,7 +272,6 @@ inputCHercher.addEventListener("input", function () {
       <p>****************************************************************</p>`;
   });
 });
-
 const filterMember = document.getElementById("filterMember");
 const filterPriority = document.getElementById("filrepriority");
 function appliquerFiltres() {
@@ -234,10 +289,8 @@ function appliquerFiltres() {
     });
   console.log(tabFilter);
 }
-
 filterMember.addEventListener("input", appliquerFiltres);
 filterPriority.addEventListener("change", appliquerFiltres);
-
 // modification
 let data_update = {};
 
