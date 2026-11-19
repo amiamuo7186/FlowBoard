@@ -1,17 +1,19 @@
 
 export async function loadCard() {
   
-  try{
+  // try{
     const response= await axios.get('https://flowboard-api-virid.vercel.app/cards', {
     headers: {
       'X-Workspace': 'public'
     }
   })
    return response.data
-  }
-  catch(error){
-    return error
-  }
+  // }
+  // catch(error){
+  //   console.log(error.message ,  "error");
+   
+  //   return error
+  // }
 
 }
 export async function filter(priority, memberId) {

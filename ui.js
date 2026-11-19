@@ -25,7 +25,7 @@ export function afficher(tab) {
     btnPreviuos.textContent = "⬅️";
     const btnModify = document.createElement("button");
     const btnDelete=document.createElement("button");
-    btnDelete.setAttribute("data-idd",tab[i].id);
+    btnDelete.setAttribute("data-idd",tab[i].id)
     btnDelete.textContent="Delete"
     btnDelete.className="mr-4 ml-4 bg-gray-100";
     btnModify.textContent = "Modifier";
@@ -57,7 +57,7 @@ export function afficher(tab) {
       toDo.appendChild(btnModify);
      toDo.appendChild(btnDelete)
 
-      console.log(btnNext);
+      // console.log(btnNext);
       toDo.appendChild(btnNext);
 
       toDo.innerHTML += `
@@ -76,7 +76,7 @@ export function afficher(tab) {
       prog.appendChild(btnPreviuos);
       
 
-      console.log(btnPreviuos);
+      // console.log(btnPreviuos);
       tab[i].tags.forEach((o) => {
         const p = document.createElement("span");
 
@@ -95,7 +95,7 @@ prog.appendChild(btnDelete)
       prog.appendChild(btnNext);
      
 
-      console.log(btnNext);
+      // console.log(btnNext);
       prog.innerHTML += `
        <p>****************************************************************</p>`;
     } else {
@@ -112,7 +112,7 @@ prog.appendChild(btnDelete)
       don.appendChild(btnPreviuos);
       
 
-      console.log(btnPreviuos);
+      // console.log(btnPreviuos);
       tab[i].tags.forEach((o) => {
         const p = document.createElement("span");
 
@@ -148,9 +148,9 @@ export function masquer() {
   ress.hidden = false;
   menu.hidden = true;
 }
-export function ressailler(afficher) {
+export function ressailler() {
   console.log("Nouvelle tentative...");
-  loadCard(afficher, masquer);
+  masquer()
 }
 export function ValiderText(...values) {
   console.log(values);
