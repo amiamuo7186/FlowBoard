@@ -24,6 +24,10 @@ export function afficher(tab) {
     btnNext.textContent = "➡️";
     btnPreviuos.textContent = "⬅️";
     const btnModify = document.createElement("button");
+    const btnDelete=document.createElement("button");
+    btnDelete.setAttribute("data-idd",tab[i].id);
+    btnDelete.textContent="Delete"
+    btnDelete.className="mr-4 ml-4 bg-gray-100";
     btnModify.textContent = "Modifier";
     btnModify.className = "bg-gray-100";
     if (tab[i].status == "todo") {
@@ -51,7 +55,7 @@ export function afficher(tab) {
       btnModify.setAttribute("data-id", tab[i].id);
 
       toDo.appendChild(btnModify);
-     
+     toDo.appendChild(btnDelete)
 
       console.log(btnNext);
       toDo.appendChild(btnNext);
@@ -87,7 +91,7 @@ export function afficher(tab) {
       btnModify.setAttribute("data-id", tab[i].id);
 
       prog.appendChild(btnModify);
-
+prog.appendChild(btnDelete)
       prog.appendChild(btnNext);
      
 
@@ -121,7 +125,8 @@ export function afficher(tab) {
       });
 
       btnModify.setAttribute("data-id", tab[i].id);
-
+     don.appendChild(btnModify)
+     don.appendChild(btnDelete)
       don.innerHTML += `
       <p>****************************************************************</p>
 `;

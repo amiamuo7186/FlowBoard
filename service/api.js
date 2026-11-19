@@ -65,6 +65,6 @@ export async function glissement (id,status) {
   
 }
 export async function Delete(id){
-  return await axios.delete('https://flowboard-api-virid.vercel.app/cards/'+id )
+  return await axios.delete('https://flowboard-api-virid.vercel.app/cards/'+id+'?password=1234')
 }
 
