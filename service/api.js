@@ -64,5 +64,7 @@ export async function glissement (id,status) {
   return await axios.patch('https://flowboard-api-virid.vercel.app/cards/'+id+'?password=1234',{status})
   
 }
-
+export async function Delete(id){
+  return await axios.delete('https://flowboard-api-virid.vercel.app/cards/'+id )
+}
 
