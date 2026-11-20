@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <title>FlowBoard</title>
+    <script src="main.js" type="module"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="./service/api.js" type="module"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
 
-    <script src="ui.js" type="module"></script>
     <div hidden id="error">
         <span class="flex flex-col justify-between ">
             <p
@@ -19,6 +21,7 @@
             <button type="button" id="ressailler" class="btn-error m-10 border border-red-400">ressailler</button>
         </span>
     </div>
+    <span id="message d'erreur"  class="text-red-500"></span>
     <main id="cards">
         <div class="bg-gray-100 min-h-screen p-8">
             <div>
@@ -34,52 +37,65 @@
                         <option value="low">low</option>
                     </select>
                     <button type="button" id="new"> +ajouter </button>
+                    <button type="button" id="IA">Générer avec l'IA </button>
+                   
 
                 </span>
-                <dialog id="search" class="bg-gray-400 bg-opacity-90 p-6 rounded shadow-lg mr-200 mt-10 ">
+                <dialog id="search" class=" bg-opacity-90 p-6 rounded shadow-lg mr-200 mt-10 ">
                     <label for="chercher" class="block text-sm font-medium text-gray-700">CHERCHER</label>
                     <input type="text" id="chercher" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
                     <div id="resultat"></div>
 
                 </dialog>
                 <dialog id="add" class="bg-gray-400 bg-opacity-90 p-6 rounded shadow-lg ml-5 ">
-                    <form class="space-y-4 p-6">
+                    <form  id="form_Saisie" class="space-y-4 p-6">
+                        <input type="hidden" id="masquer">
                         <h2 class="text-2xl flex">tache</h2>
                         <label class="block text-sm font-medium text-gray-700" for="titre"> title</label>
-                        <input id="titre" data-name="title"
+                        <input id="titre" name="title"
                             class="mt-1 block w-full border border-gray-300 rounded-md p-2" type="text">
                         <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
-                        <select name="Status" id="status">
+                        <select name="status" id="status">
                             <option value="">choisir un choix </option>
                             <option value="todo">toDo</option>
                             <option value="in-progress">in Progress</option>
                             <option value="done">done</option>
                         </select>
                         <label for="desc" class="block text-sm font-medium text-gray-700">Description</label>
-                        <textarea id="desc" placeholder="votre descrption"></textarea>
+                        <textarea id="desc" name="description"  placeholder="votre descrption"></textarea>
                         <label for="priority" class="block text-sm font-medium text-gray-700">Priority</label>
-                        <select name="Priority" id="priority">
+                        <select name="priority" id="priority">
                             <option value="">choisir un choix </option>
                             <option value="high">high</option>
                             <option value="medium">medium</option>
                             <option value="low">low</option>
                         </select>
                         <label for="assign" class="block text-sm font-medium text-gray-700">assignee</label>
-                        <input type="text" id="assign" data-name="assignee"
+                        <input type="text" id="assign" name="assignee"
                             class="mt-1 block w-full border border-gray-300 rounded-md p-2">
                         <label type="Dudate" class="block text-sm font-medium text-gray-700">dueDate</label>
-                        <input type="date" id="Dudate">
+                        <input type="date" id="Dudate" name="dueDate">
                         <label for="tags" class="block text-sm font-medium text-gray-700">tags</label>
-                        <input type="text" id="tags" data-name="tags"
+                        <input type="text" id="tags" name="tags"
                             class="mt-1 block w-full border border-gray-300 rounded-md p-2">
-                        <button type="submit" class="block text-sm font-medium text-gray-700">add</button>
-                        <button type="button" class="block text-sm font-medium text-gray-700"></button>
+                        
+                        <button  type="button" id="modif" class="  text-sm font-medium text-gray-700">update</button>
+                        <button hidden type="submit" id="btnajout" class=" text-sm font-medium text-gray-700">add</button>
                     </form>
+                </dialog>
+                <dialog id="generAI" class=" bg-opacity-90 p-6 rounded shadow-lg mr-200 mt-10 " >
+                   <form id="from_Ai" class="space-y-4 p-6">
+                    <label for="descAi" class="block text-sm font-medium text-gray-700">Description</label>
+                        <textarea id="descAi" name="descriptionAi" minlength="10" maxlength="2000" required  placeholder="votre descrption" required></textarea>
+                        <label for="Section_Ai" class="block text-sm font-medium text-gray-700">Nombre Des taches </label>
+                        <input id="Section_Ai" type="number" min="1" max="10" >
+                        <button type="submit" id="sumbit-Ai">done</button>
+                   </form>
                 </dialog>
 
 
 
-                <div class="flex flex-col md:flex-row gap-6">
+                <div  id =tasks class="flex flex-col md:flex-row gap-6">
 
                     <div class="flex-1 bg-gray-200 p-4 ">
                         <h2 class="text-xl font-semibold mb-4 flex justify-center">To Do</h2>
