@@ -7,6 +7,7 @@ import {
   dialog,
   ObjectA,
   Convertir,
+  filterMember,filterPriority
 } from "./ui.js";
 import {
   loadCard,
@@ -15,8 +16,11 @@ import {
   MOdifierCarte,
   glissement,
   Delete,
+  generateAi,
 } from "./service/api.js";
+import { ai } from "./service/ApiKey.js";
 let cards = null;
+let dataAi = {};
 const dialog2 = document.getElementById("search");
 const resultat = document.getElementById("resultat");
 const inputCHercher = document.getElementById("chercher");
@@ -26,20 +30,26 @@ const btnRess = document.getElementById("ressailler");
 const btnUpdate = document.getElementById("modif");
 const btnAjout = document.getElementById("btnajout");
 const form = document.getElementById("form_Saisie");
-
-// afficher(datae)
+const dialog3 = document.getElementById("generAI");
+const btnAI = document.getElementById("IA");
+const btndoneAi = document.getElementById("sumbit-Ai");
+const formAi = document.getElementById("from_Ai");
+ const datae = await loadCard()
+  console.log(localStorage.getItem("Priotity"))
+  console.log(localStorage.getItem("Membre"));
+  filterPriority.value=localStorage.getItem("Priotity")
+  filterMember.value= localStorage.getItem("Membre")
+  appliquerFiltres()
 async function appel() {
-  try{
-  const datae = await loadCard() 
-afficher(datae);
+  try {
+    const datae = await loadCard();
+    afficher(datae);
+  } catch (error) {
+    console.log("Erreur :", error);
+    ressailler();
+  }
 }
-  catch(error ) {
-
-      console.log("Erreur :", error);
-      ressailler()
-    };
-}
-appel()
+appel();
 
 document.addEventListener("click", async function (e) {
   const next = e.target.closest("[data-idn]");
@@ -79,12 +89,12 @@ document.addEventListener("click", async function (e) {
       afficher(datae);
     }
   }
-  const modifier=e.target.closest("[data-id]");
-  if (modifier){
-        btnAjout.hidden = true;
+  const modifier = e.target.closest("[data-id]");
+  if (modifier) {
+    btnAjout.hidden = true;
     btnUpdate.hidden = false;
     dialog.showModal();
-    let {data} = await recupre_data(modifier.dataset.id);
+    let { data } = await recupre_data(modifier.dataset.id);
     btnUpdate.setAttribute("data-id", modifier.dataset.id);
     document.querySelector('[name="title"]').value = data.title;
     document.querySelector('[name="description"]').value = data.description;
@@ -94,9 +104,9 @@ document.addEventListener("click", async function (e) {
     document.querySelector('[name="dueDate"]').value = data.dueDate;
     document.querySelector('[name="tags"]').value = data.tags;
   }
-  const suprime=e.target.closest("[data-idd]");
-  if (suprime){
-    const msg= document.getElementById("message d'erreur")
+  const suprime = e.target.closest("[data-idd]");
+  if (suprime) {
+    const msg = document.getElementById("message d'erreur");
     let idDeltete = suprime.dataset.idd;
     Swal.fire({
       title: "vous etre sur ",
@@ -108,19 +118,18 @@ document.addEventListener("click", async function (e) {
       confirmButtonText: "Oui,suprime",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        try{
-        msg.textContent=""
-        await Delete(idDeltete);
-        const datae = await loadCard();
-        afficher(datae);
-        Swal.fire({
-          title: "Deleted!",
-          text: "Votre tache etait suprimée.",
-          icon: "success",
-        });
-        }
-        catch(error){
-          msg.textContent = "Erreur : impossible de supprimer cette carte."
+        try {
+          msg.textContent = "";
+          await Delete(idDeltete);
+          const datae = await loadCard();
+          afficher(datae);
+          Swal.fire({
+            title: "Deleted!",
+            text: "Votre tache etait suprimée.",
+            icon: "success",
+          });
+        } catch (error) {
+          msg.textContent = "Erreur : impossible de supprimer cette carte.";
         }
       }
     });
@@ -227,12 +236,14 @@ inputCHercher.addEventListener("input", function () {
       <p>****************************************************************</p>`;
   });
 });
-const filterMember = document.getElementById("filterMember");
-const filterPriority = document.getElementById("filrepriority");
+// const filterMember = document.getElementById("filterMember");
+// const filterPriority = document.getElementById("filrepriority");
 function appliquerFiltres() {
+ 
   const valeurMembre = filterMember.value;
   const valeurPriority = filterPriority.value;
-
+ localStorage.setItem("Membre",valeurMembre)
+ localStorage.setItem("Priotity",valeurPriority)
   filter(valeurPriority, valeurMembre);
   const tabFilter = filter(valeurPriority, valeurMembre)
     .then((tasks) => {
@@ -265,4 +276,33 @@ btnUpdate.addEventListener("click", async function () {
   await MOdifierCarte(idModify, data_update);
   const datae = await loadCard();
   afficher(datae);
+});
+btnAI.addEventListener("click", function () {
+  dialog3.showModal();
+});
+dialog3.addEventListener("click", (e) => {
+  if (e.target === dialog3) {
+    // console.log(e.target)
+    dialog3.close();
+  }
+});
+btndoneAi.addEventListener("click", function () {
+  dialog3.close();
+});
+
+formAi.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  if (formAi.checkValidity()) {
+    console.log("Formulaire valide !");
+    dataAi.description = document.querySelector("#descAi").value;
+    dataAi.apiKey = ai;
+    dataAi.count = Number(document.querySelector("#Section_Ai").value);
+    console.log(dataAi);
+    await generateAi(dataAi);
+    const datae = await loadCard();
+    afficher(datae);
+  } else {
+    formAi.reportValidity();
+  }
 });

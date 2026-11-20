@@ -4,6 +4,8 @@ const toDo = document.getElementById("todo-list");
 const prog = document.getElementById("progress-list");
 const don = document.getElementById("done-list");
 export const dialog = document.getElementById("add");
+ export const filterMember = document.getElementById("filterMember");
+ export const filterPriority = document.getElementById("filrepriority");
 export let ObjectA = {};
 let invalides = [];
 const RejexText = /^[a-zA-ZÀ-ÿ\s'-]{2,50}$/;
@@ -16,6 +18,10 @@ export function afficher(tab) {
   toDo.textContent = "";
   prog.textContent = "";
   don.textContent = "";
+ 
+  
+
+
   for (let i = 0; i < tab.length; i++) {
     const btnNext = document.createElement("button");
     const btnPreviuos = document.createElement("button");
@@ -189,4 +195,7 @@ export function valideDate(val) {
 export function Convertir(str) {
   const tab = str.split(",");
   return tab;
+}
+export function validation(form){
+  
 }

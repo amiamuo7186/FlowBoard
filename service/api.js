@@ -1,19 +1,13 @@
 
 export async function loadCard() {
   
-  // try{
     const response= await axios.get('https://flowboard-api-virid.vercel.app/cards', {
     headers: {
       'X-Workspace': 'public'
     }
   })
    return response.data
-  // }
-  // catch(error){
-  //   console.log(error.message ,  "error");
-   
-  //   return error
-  // }
+
 
 }
 export async function filter(priority, memberId) {
@@ -69,11 +63,23 @@ export async function glissement (id,status) {
 }
 // suprimer la carte 
 export async function Delete(id){
-  try{
       return await axios.delete('https://flowboard-api-virid.vercel.app/cards/'+id+'?password=1234')
-  }
- catch(error){
-  throw error
- }
+  
+
+}
+// Generation par Ai
+
+export async function generateAi(dataAI ) {
+  const options = {
+  method: 'POST',
+  url: 'https://flowboard-api-virid.vercel.app/ai/cards?password=1234',
+  data: dataAI
+}
+try {
+  const { data } = await axios.request(options)
+  console.log(data)
+} catch (error) {
+  console.error(error)
+}
 }
 
