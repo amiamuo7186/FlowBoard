@@ -33,9 +33,9 @@ export function afficher(tab) {
     const btnDelete=document.createElement("button");
     btnDelete.setAttribute("data-idd",tab[i].id)
     btnDelete.textContent="Delete"
-    btnDelete.className="mr-4 ml-4 bg-gray-100";
+    btnDelete.className="mr-4 ml-4 bg-gray-100  dark:text-black ";
     btnModify.textContent = "Modifier";
-    btnModify.className = "bg-gray-100";
+    btnModify.className = "bg-gray-100  dark:text-black";
     if (tab[i].status == "todo") {
       counttoDo++;
       toDo.innerHTML += `

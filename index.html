@@ -1,9 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<style type="text/tailwindcss">
+  @custom-variant dark (&:where(.dark, .dark *));
+</style>
     <title>FlowBoard</title>
     <script src="main.js" type="module"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -11,7 +15,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
-<body>
+<body id="page" class="bg-gray-100 text-gray-900 dark:bg-gray-950 dark:text-white">
 
     <div hidden id="error">
         <span class="flex flex-col justify-between ">
@@ -23,7 +27,7 @@
     </div>
     <span id="message d'erreur"  class="text-red-500"></span>
     <main id="cards">
-        <div class="bg-gray-100 min-h-screen p-8">
+        <div class="bg-white dark:bg-gray-800">
             <div>
                 <span class="flex flex-row justify-between">
                     <h1 class="text-3xl font-bold  mb-8">Kanban Board</h1>
@@ -38,6 +42,7 @@
                     </select>
                     <button type="button" id="new"> +ajouter </button>
                     <button type="button" id="IA">Générer avec l'IA </button>
+                    <button id="theme">🌙 Dark Mode</button>
                    
 
                 </span>
@@ -95,9 +100,9 @@
 
 
 
-                <div  id =tasks class="flex flex-col md:flex-row gap-6">
+                <div  id =tasks class="flex flex-col md:flex-row gap-6 bg-gray-200 dark:bg-gray-900">
 
-                    <div class="flex-1 bg-gray-200 p-4 ">
+                    <div class="flex-1 p-4 bg-white text-gray-900 dark:bg-gray-800 dark:text-white">
                         <h2 class="text-xl font-semibold mb-4 flex justify-center">To Do</h2>
                         <h4 id="conteurToDo"></h4>
                         <ul id="todo-list" class="min-h-[200px] space-y-2">
@@ -106,14 +111,14 @@
                         <span id="affichetags"></span>
                     </div>
 
-                    <div class="flex-1 bg-gray-200 p-4 ">
+                    <div class="flex-1 p-4 bg-white text-gray-900 dark:bg-gray-800 dark:text-white">
                         <h2 class="text-xl font-semibold mb-4 flex justify-center">In Progress</h2>
                         <h4 id="conteurpro"></h4>
                         <ul id="progress-list" class="min-h-[200px] space-y-2">
                         </ul>
                     </div>
 
-                    <div class="flex-1 bg-gray-200 p-4 ">
+                    <div class="flex-1 bg-gray-200 p-4 bg-white text-gray-900 dark:bg-gray-800 dark:text-white">
                         <h2 class="text-xl font-semibold mb-4 flex justify-center">Done</h2>
                         <h4 id="conteurDone"></h4>
                         <ul id="done-list" class="min-h-[200px] space-y-2">

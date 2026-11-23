@@ -34,12 +34,24 @@ const dialog3 = document.getElementById("generAI");
 const btnAI = document.getElementById("IA");
 const btndoneAi = document.getElementById("sumbit-Ai");
 const formAi = document.getElementById("from_Ai");
- const datae = await loadCard()
+const btnTheme=document.getElementById("theme")
+const body=document.getElementById("page")
+  const theme = localStorage.getItem("theme");
+
+if (theme === "dark") {
+    document.documentElement.classList.add("dark");
+    btnTheme.textContent = "☀️ Light Mode";
+} else {
+    document.documentElement.classList.remove("dark");
+    btnTheme.textContent = "🌙 Dark Mode";
+}
+
   console.log(localStorage.getItem("Priotity"))
   console.log(localStorage.getItem("Membre"));
   filterPriority.value=localStorage.getItem("Priotity")
   filterMember.value= localStorage.getItem("Membre")
   appliquerFiltres()
+ const datae = await loadCard()
 async function appel() {
   try {
     const datae = await loadCard();
@@ -305,4 +317,16 @@ formAi.addEventListener("submit", async (e) => {
   } else {
     formAi.reportValidity();
   }
+});
+
+btnTheme.addEventListener("click", function () {
+
+    document.documentElement.classList.toggle("dark");
+
+    const isDark = document.documentElement.classList.contains("dark");
+
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+
+    btnTheme.textContent = isDark ? "☀️ Light Mode" : "🌙 Dark Mode";
+
 });
