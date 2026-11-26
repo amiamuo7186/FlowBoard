@@ -35,7 +35,6 @@ const btnAI = document.getElementById("IA");
 const btndoneAi = document.getElementById("sumbit-Ai");
 const formAi = document.getElementById("from_Ai");
 const btnTheme=document.getElementById("theme")
-const body=document.getElementById("page")
   const theme = localStorage.getItem("theme");
 
 if (theme === "dark") {
@@ -115,7 +114,11 @@ document.addEventListener("click", async function (e) {
     document.querySelector('[name="priority"]').value = data.priority;
     document.querySelector('[name="dueDate"]').value = data.dueDate;
     document.querySelector('[name="tags"]').value = data.tags;
+     btnUpdate.disabled = false;
   }
+  // btnUpdate.addEventListener("click",function(){
+  //   btnUpdate.disabled=true
+  // })
   const suprime = e.target.closest("[data-idd]");
   if (suprime) {
     const msg = document.getElementById("message d'erreur");
@@ -272,6 +275,9 @@ filterPriority.addEventListener("change", appliquerFiltres);
 // modification
 let data_update = {};
 btnUpdate.addEventListener("click", async function () {
+   
+btnUpdate.disabled=true
+console.log(btnUpdate.disabled)
   console.log(btnUpdate);
   let idModify = btnUpdate.dataset.id;
   console.log(idModify);
@@ -286,6 +292,22 @@ btnUpdate.addEventListener("click", async function () {
   };
   console.log(data_update);
   await MOdifierCarte(idModify, data_update);
+  
+  try{
+      Swal.fire({
+  title: "Good job!",
+  text: "votre modification a bien passer ",
+  icon: "success"
+});
+  }
+  catch(e){
+     Swal.fire({
+  icon: "error",
+  title: "Oops...",
+  text: "Something went wrong!",
+  footer: "<a href=\"#\">Why do I have this issue?</a>"
+});
+  }
   const datae = await loadCard();
   afficher(datae);
 });
@@ -312,6 +334,21 @@ formAi.addEventListener("submit", async (e) => {
     dataAi.count = Number(document.querySelector("#Section_Ai").value);
     console.log(dataAi);
     await generateAi(dataAi);
+      try{
+      Swal.fire({
+  title: "Good job!",
+  text: "votre ajout a Ai a bien passer ",
+  icon: "success"
+});
+  }
+  catch(e){
+     Swal.fire({
+  icon: "error",
+  title: "Oops...",
+  text: "Something went wrong!",
+  footer: "<a href=\"#\">Why do I have this issue?</a>"
+});
+  }
     const datae = await loadCard();
     afficher(datae);
   } else {
